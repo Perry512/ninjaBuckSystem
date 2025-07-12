@@ -1,0 +1,5 @@
+{"ninjas": [
+    {"ninjaName": "TestNinja", "ninjaBucks" : 100},
+    {"ninjaName": "TestNinja1", "ninjaBucks" : 100}
+    ]
+}
