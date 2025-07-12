@@ -8,6 +8,8 @@ type Ninja = {
 const BIN_ID = import.meta.env.VITE_JSONBIN_BIN_ID;
 const MASTER_KEY = import.meta.env.VITE_JSONBIN_MASTER_KEY;
 
+const apiLink = `https://api.jsonbin.io/v3/b/${BIN_ID}`
+
 function App() {
 
   const [ninjaList, setNinjaList] = useState<Ninja[]>([]);
@@ -18,7 +20,7 @@ function App() {
 
   const updateJSON = async (updatedNinjas: Ninja[]) => {
     try {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/`, {
+      const res = await fetch(`${apiLink}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
@@ -39,7 +41,7 @@ function App() {
   const readJSON = async () => {
 
     try {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+      const res = await fetch(`${apiLink}/latest`, {
         headers: {
           'X-Master-Key': MASTER_KEY,
         }
@@ -83,7 +85,7 @@ function App() {
     setNinjaBuckAmountInput(updated);
   };
 
-  const handleAddNinja = (e: FormEvent) => {
+  const handleAddNinja = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!newNinjaName.trim()) return alert('Please enter a name');
