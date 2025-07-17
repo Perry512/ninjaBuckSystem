@@ -75,20 +75,35 @@ function App() {
     setNinjaBuckAmountInput(updated);
   }
 
-  const handleNinjaBuckAmountSubmit = (index: number) => {
+  const handleAddNinjaBuckAmountSubmit = (index: number) => {
     const amt = ninjaBuckAmountInput[index];
-    if (!amt || amt <= 0) return;
+    if (!amt || amt <= 0) return alert("Please enter amount greater than 0!");
     addNinjaBucks(index, amt);
 
     const updated = [...ninjaBuckAmountInput];
     updated[index] = 1;
     setNinjaBuckAmountInput(updated);
+
   };
+
+    const handleSubtractNinjaBuckAmountSubmit = (index: number) => {
+    const amt = ninjaBuckAmountInput[index];
+    if (!amt) return alert("Please enter amount greater than 0!");
+    addNinjaBucks(index, -amt);
+
+    const updated = [...ninjaBuckAmountInput];
+    updated[index] = 1;
+    setNinjaBuckAmountInput(updated);
+    
+  };
+
 
   const handleAddNinja = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!newNinjaName.trim()) return alert('Please enter a name');
+
+    // Check for adding a negative amount of Ninja bucks
     if (newNinjaBucks < 0) return alert('Please enter value over 0');
 
     const newNinja: Ninja = {
@@ -113,11 +128,11 @@ function App() {
       <td>
         <input 
           type="number"
-          min="1"
-          value={ninjaBuckAmountInput[index] || 1}
+          value={ninjaBuckAmountInput[index]}
           onChange={(e) => handleNinjaBuckAmountChange(index, parseInt(e.target.value))}
         />
-        <button onClick={() => handleNinjaBuckAmountSubmit(index)}> Add Ninja Bucks </button>
+        <button onClick={() => handleAddNinjaBuckAmountSubmit(index)}> Add Ninja Bucks </button>
+        <button onClick={() => handleSubtractNinjaBuckAmountSubmit(index)}> Spend Ninja Bucks </button>
       </td>
     </tr>
     )
@@ -149,7 +164,6 @@ function App() {
         />
         <input
           type="number"
-          min="0"
           value={newNinjaBucks}
           onChange={(e) => setNewNinjaBucks(parseInt(e.target.value))}
           required
@@ -162,7 +176,8 @@ function App() {
           <tr>
             <th>Name</th>
             <th>$$$</th>
-            <th>ADD 1</th>
+            <th>Add</th>
+            <th>Spend</th>
           </tr>
         </thead>
         <tbody>{ninjaRender}</tbody>
